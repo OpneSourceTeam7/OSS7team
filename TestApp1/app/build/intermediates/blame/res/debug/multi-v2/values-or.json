@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\gjsxj\\AndroidStudioProjects\\TestApp1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-or\\values-or.xml",
+            "outputFile": "C:\\Users\\gjsxj\\AndroidStudioProjects\\OSS\\TestApp1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-or\\values-or.xml",
             "map": [
                 {
                     "source": "C:\\Users\\gjsxj\\.gradle\\caches\\transforms-2\\files-2.1\\b028350575b5cf32dd709d63ef38770d\\jetified-play-services-base-16.0.1\\res\\values-or\\values.xml",
