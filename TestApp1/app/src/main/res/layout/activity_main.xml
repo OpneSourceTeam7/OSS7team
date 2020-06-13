@@ -8,42 +8,54 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_margin="40dp"
-        android:orientation="horizontal"
-        android:weightSum="10">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="주유소 가맹점"
-            android:textSize="35pt"/>
-    </LinearLayout>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:weightSum="10">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:autoText="false"
+                android:text="내 주변 주유소"
+                android:textSize="36sp" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="390dp">
+
+            </ListView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
 
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="@android:dimen/thumbnail_width"
-            android:layout_height="match_parent"
-            android:text="검색하기"
-            android:textSize="12sp"
-            android:onClick="clickSearch"/>
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="@android:dimen/thumbnail_width"
+                    android:layout_height="match_parent"
+                    android:onClick="clickSearch"
+                    android:text="검색하기"
+                    android:textSize="12sp" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="@android:dimen/thumbnail_width"
-            android:layout_height="match_parent"
-            android:text="돌아가기"
-            android:textSize="12sp"
-            android:onClick="clickBack"/>
-    </LinearLayout>
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="@android:dimen/thumbnail_width"
+                    android:layout_height="match_parent"
+                    android:onClick="clickBack"
+                    android:text="돌아가기"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
