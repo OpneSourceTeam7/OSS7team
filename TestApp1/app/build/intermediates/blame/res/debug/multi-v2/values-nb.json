@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\JiSeokCheol\\Desktop\\OSS7team-master\\TestApp1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-nb\\values-nb.xml",
+            "outputFile": "C:\\Users\\JiSeokCheol\\Documents\\OSS7team\\TestApp1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-nb\\values-nb.xml",
             "map": [
                 {
                     "source": "C:\\Users\\JiSeokCheol\\.gradle\\caches\\transforms-2\\files-2.1\\4b6dd5b04c5f6e83e6c6620adf050868\\jetified-play-services-base-16.0.1\\res\\values-nb\\values.xml",

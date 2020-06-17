@@ -51,7 +51,7 @@
         android:id="@+id/button3"
         android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="115dp"
-        android:onClick="clickBack"
+        android:onClick="clickSearch"
         android:text="내주변주유소가맹점찾기"
         android:textSize="12sp" />
 
