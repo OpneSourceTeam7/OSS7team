@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\JiSeokCheol\\Documents\\OSS7team\\TestApp1\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_g_p_s.xml.flat",
+        "source": "C:\\Users\\JiSeokCheol\\Documents\\OSS7team\\TestApp1\\app\\src\\main\\res\\layout\\activity_g_p_s.xml"
+    },
+    {
         "merged": "C:\\Users\\JiSeokCheol\\Documents\\OSS7team\\TestApp1\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
         "source": "C:\\Users\\JiSeokCheol\\Documents\\OSS7team\\TestApp1\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
     },

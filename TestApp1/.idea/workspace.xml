@@ -63,6 +63,9 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
+    <key name="android.template.-244060314">
+      <recent name="com.example.testapp1" />
+    </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="com.example.testapp1" />
     </key>
@@ -358,10 +361,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="0" y="447" key="#com.intellij.ide.util.MemberChooser" timestamp="1592381448395">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state x="0" y="447" key="#com.intellij.ide.util.MemberChooser/0.0.1707.1027@0.0.1707.1027" timestamp="1592381448395" />
     <state x="0" y="319" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1592304424453">
       <screen x="0" y="0" width="1707" height="1027" />
     </state>
     <state x="0" y="319" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.0.1707.1027@0.0.1707.1027" timestamp="1592304424453" />
+    <state x="434" y="269" key="AndroidCreateResourceFileDialog" timestamp="1592365493386">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state x="434" y="269" key="AndroidCreateResourceFileDialog/0.0.1707.1027@0.0.1707.1027" timestamp="1592365493386" />
     <state x="673" y="281" key="FileChooserDialogImpl" timestamp="1592303939130">
       <screen x="0" y="0" width="1707" height="1027" />
     </state>
@@ -370,5 +381,9 @@
       <screen x="0" y="0" width="1707" height="1027" />
     </state>
     <state x="584" y="350" key="com.intellij.ide.util.TipDialog/0.0.1707.1027@0.0.1707.1027" timestamp="1592303632722" />
+    <state x="0" y="263" key="refactoring.ChangeSignatureDialog" timestamp="1592386776914">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state x="0" y="263" key="refactoring.ChangeSignatureDialog/0.0.1707.1027@0.0.1707.1027" timestamp="1592386776914" />
   </component>
 </project>

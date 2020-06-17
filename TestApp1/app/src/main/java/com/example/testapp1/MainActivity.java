@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -19,7 +20,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
     }
+  // 내주변 클릭시
+  public void clickgps(View view){
+
+        Intent intent = new Intent(MainActivity.this, ActivityGPS.class);
+        startActivity(intent);
+  }
 
     //검색버튼 클릭 시
     public void clickSearch(View view) {
