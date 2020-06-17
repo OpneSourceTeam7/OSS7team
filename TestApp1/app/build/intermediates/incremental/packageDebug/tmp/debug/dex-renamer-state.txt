@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #Wed Jun 17 19:52:55 KST 2020
+=======
+#Wed Jun 17 20:15:21 KST 2020
+>>>>>>> master
 base.0=C\:\\Users\\JiSeokCheol\\Documents\\OSS7team\\TestApp1\\app\\build\\intermediates\\dex\\debug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

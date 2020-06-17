@@ -4,7 +4,11 @@
             "outputFile": "C:\\Users\\JiSeokCheol\\Documents\\OSS7team\\TestApp1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-my\\values-my.xml",
             "map": [
                 {
+<<<<<<< HEAD
                     "source": "C:\\Users\\JiSeokCheol\\.gradle\\caches\\transforms-2\\files-2.1\\bcfc0b80df78591183083cc148e1cf2c\\core-1.1.0\\res\\values-my\\values-my.xml",
+=======
+                    "source": "C:\\Users\\JiSeokCheol\\.gradle\\caches\\transforms-2\\files-2.1\\ef8a364a6a39421e69c96cf68eeb3e63\\appcompat-1.1.0\\res\\values-my\\values-my.xml",
+>>>>>>> master
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -21,7 +25,28 @@
                     }
                 },
                 {
+<<<<<<< HEAD
                     "source": "C:\\Users\\JiSeokCheol\\.gradle\\caches\\transforms-2\\files-2.1\\2be5ef2959ea5355d833f1cf7554bfda\\jetified-play-services-base-17.0.0\\res\\values-my\\values.xml",
+=======
+                    "source": "C:\\Users\\JiSeokCheol\\.gradle\\caches\\transforms-2\\files-2.1\\34b4ab0d8b65ac74ddd00d45b26dd963\\core-1.1.0\\res\\values-my\\values-my.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "48",
+                        "startColumns": "4",
+                        "startOffsets": "5800",
+                        "endColumns": "100",
+                        "endOffsets": "5896"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\JiSeokCheol\\.gradle\\caches\\transforms-2\\files-2.1\\4b6dd5b04c5f6e83e6c6620adf050868\\jetified-play-services-base-16.0.1\\res\\values-my\\values.xml",
+>>>>>>> master
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -38,7 +63,11 @@
                     }
                 },
                 {
+<<<<<<< HEAD
                     "source": "C:\\Users\\JiSeokCheol\\.gradle\\caches\\transforms-2\\files-2.1\\164bb505b81f338baa0db13edd04c1d1\\jetified-play-services-basement-17.0.0\\res\\values-my\\values.xml",
+=======
+                    "source": "C:\\Users\\JiSeokCheol\\.gradle\\caches\\transforms-2\\files-2.1\\899db977e95144123d586a226ded0a1f\\jetified-play-services-basement-16.0.1\\res\\values-my\\values.xml",
+>>>>>>> master
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -53,6 +82,7 @@
                         "endColumns": "212",
                         "endOffsets": "4266"
                     }
+<<<<<<< HEAD
                 },
                 {
                     "source": "C:\\Users\\JiSeokCheol\\.gradle\\caches\\transforms-2\\files-2.1\\6c5a1a33c151bf1b1b969a4997bc8337\\appcompat-1.1.0\\res\\values-my\\values-my.xml",
@@ -70,6 +100,8 @@
                         "endColumns": "112,106,115,86,108,122,81,81,90,91,94,93,100,92,94,93,90,90,83,114,108,98,125,106,107,159,102,84",
                         "endOffsets": "213,320,436,523,632,755,837,919,1010,1102,1197,1291,1392,1485,1580,1674,1765,1856,1940,2055,2164,2263,2389,2496,2604,2764,2867,5795"
                     }
+=======
+>>>>>>> master
                 }
             ]
         }
