@@ -97,7 +97,8 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
                 // 이벤트 소비, OnMapClick 이벤트는 발생하지 않음
                 return true;
             });
-
+     // gps 수정
+            //수정
 
 
         }
