@@ -12,7 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c4ddcd6-f091-4bdb-816a-d70183a7b267" name="Default Changelist" comment="test">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +57,7 @@
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_2_API_28" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-05-27T12:15:43.436Z" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../GasStation" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -310,10 +309,10 @@
       <screen x="0" y="0" width="1707" height="1027" />
     </state>
     <state x="666" y="253" key="#TestApp1-app/0.0.1707.1027@0.0.1707.1027" timestamp="1592392176483" />
-    <state x="729" y="364" key="FileChooserDialogImpl" timestamp="1592392346209">
+    <state x="729" y="364" key="FileChooserDialogImpl" timestamp="1592394263808">
       <screen x="0" y="0" width="1707" height="1027" />
     </state>
-    <state x="729" y="364" key="FileChooserDialogImpl/0.0.1707.1027@0.0.1707.1027" timestamp="1592392346209" />
+    <state x="729" y="364" key="FileChooserDialogImpl/0.0.1707.1027@0.0.1707.1027" timestamp="1592394263808" />
     <state x="640" y="433" key="com.intellij.ide.util.TipDialog" timestamp="1592393188139">
       <screen x="0" y="0" width="1707" height="1027" />
     </state>
