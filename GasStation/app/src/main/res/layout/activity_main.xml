@@ -7,6 +7,25 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <FrameLayout
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit2"
+
+        app:layout_constraintVertical_bias="1.0">
+
+        <fragment
+            android:id="@+id/maps"
+            android:name="com.naver.maps.map.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
     <ImageView
         android:id="@+id/topBackground"
         android:layout_width="0dp"
@@ -29,7 +48,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="58dp"
         android:layout_marginRight="58dp"
-        android:hint="주유소 검색"
+        android:hint="검색"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,24 +64,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
-
-    <FrameLayout
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit2"
-
-        app:layout_constraintVertical_bias="1.0">
-
-        <fragment
-            android:id="@+id/maps"
-            android:name="com.naver.maps.map.MapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
