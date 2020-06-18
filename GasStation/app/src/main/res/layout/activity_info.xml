@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/background" />
+
+    <ImageView
+        android:id="@+id/searchBG"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/editbox_background_normal" />
+
+    <ImageButton
+        android:id="@+id/searchButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#00FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#00FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
+
+    <EditText
+        android:id="@+id/serachEdit"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="58dp"
+        android:fontFamily="@font/binggrae"
+        android:hint="검색"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/titleBG"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/editbox_background_normal" />
+
+            <TextView
+                android:id="@+id/titleT"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/binggrae"
+                android:text="title"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="@+id/titleBG"
+                app:layout_constraintEnd_toEndOf="@+id/titleBG"
+                app:layout_constraintStart_toStartOf="@+id/titleBG"
+                app:layout_constraintTop_toTopOf="@+id/titleBG" />
+
+            <ImageView
+                android:id="@+id/infoBG"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleBG"
+                app:srcCompat="@android:drawable/editbox_background_normal" />
+
+            <ImageView
+                android:id="@+id/addrBG"
+                android:layout_width="0dp"
+                android:layout_height="210dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/infoBG"
+                app:srcCompat="@android:drawable/editbox_background_normal" />
+
+            <TextView
+                android:id="@+id/dieselInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="16dp"
+                android:text="value"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@+id/dieselTitle"
+                app:layout_constraintTop_toBottomOf="@+id/gasolineInfo" />
+
+            <TextView
+                android:id="@+id/oliTilte"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/binggrae"
+                android:includeFontPadding="false"
+                android:text="유가 정보"
+                android:textSize="28sp"
+                app:layout_constraintStart_toStartOf="@+id/infoBG"
+                app:layout_constraintTop_toTopOf="@+id/infoBG" />
+
+            <TextView
+                android:id="@+id/gasolineInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="value"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@+id/gasolineTitle"
+                app:layout_constraintTop_toBottomOf="@+id/oliTilte" />
+
+            <TextView
+                android:id="@+id/dieselTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/binggrae"
+                android:text="경유 :"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/infoBG"
+                app:layout_constraintTop_toBottomOf="@+id/gasolineTitle" />
+
+            <TextView
+                android:id="@+id/gasolineTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/binggrae"
+                android:text="휘발유 :"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/infoBG"
+                app:layout_constraintTop_toBottomOf="@+id/oliTilte" />
+
+            <TextView
+                android:id="@+id/addrInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/binggrae"
+                android:includeFontPadding="false"
+                android:text="주소"
+                android:textSize="28sp"
+                app:layout_constraintStart_toStartOf="@+id/addrBG"
+                app:layout_constraintTop_toTopOf="@+id/addrBG" />
+
+            <TextView
+                android:id="@+id/addrInfo2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/binggrae"
+                android:includeFontPadding="false"
+                android:text="addr"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="@+id/addrBG"
+                app:layout_constraintStart_toStartOf="@+id/addrBG"
+                app:layout_constraintTop_toBottomOf="@+id/addrInfo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
