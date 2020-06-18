@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/topBackground3"
+        android:id="@+id/searchBG"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
@@ -20,7 +20,7 @@
         app:srcCompat="@android:drawable/editbox_background_normal" />
 
     <EditText
-        android:id="@+id/edit2"
+        android:id="@+id/serachEdit"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="58dp"
@@ -58,7 +58,7 @@
         app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
     <ListView
-        android:id="@+id/listview1"
+        android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
@@ -68,6 +68,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit2"></ListView>
+        app:layout_constraintTop_toBottomOf="@+id/serachEdit"></ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
