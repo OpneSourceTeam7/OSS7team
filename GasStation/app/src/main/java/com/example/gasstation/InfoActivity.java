@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import android.util.Log;
 
 public class InfoActivity extends AppCompatActivity {
 
@@ -46,8 +48,6 @@ public class InfoActivity extends AppCompatActivity {
         h.setText(item.getH1());
         g.setText(item.getG());
         addr.setText(item.getAdress());
-
-
 
     }
 
