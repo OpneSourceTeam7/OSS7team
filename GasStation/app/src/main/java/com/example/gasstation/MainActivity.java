@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.icu.text.IDNA;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -36,6 +38,7 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.Overlay;
 import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.util.MarkerIcons;
@@ -43,7 +46,7 @@ import com.naver.maps.map.util.MarkerIcons;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener{
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
     private static final int ACCESS_LOCATION_PERMISSON_REQUEST_COME = 100;
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     //버튼
     private ImageButton searchButton;
+
 
 
     @Override
@@ -128,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
 
-
+          infoWindow = new InfoWindow();
         try{
             OilApi api = new OilApi(this);
             Thread searchThread = new Thread() {
@@ -142,6 +146,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             searchThread.join();
 
             ArrayList<Marker> markers = new ArrayList<Marker>(); //검색한 주유소들의 좌표값을 이용하여 지도에 모든 주유소 마커 표시
+
+             ArrayList<String> makerlist = new ArrayList<>();
+             ArrayList<Double> makerlist2 = new ArrayList<>();
+             ArrayList<Double> makerlist3 = new ArrayList<>();
+            for(int b = 0; b<stations.size(); b++){
+                makerlist.add(stations.get(b).getTitle());
+                makerlist2.add(stations.get(b).getX());
+                makerlist3.add(stations.get(b).getY());
+            }
 
             for(int i=0;i<stations.size();i++) {
                 //Tm128 tm = new Tm128(Double.parseDouble(oilStation.get(i).getX()), Double.parseDouble(oilStation.get(i).getY()));
@@ -161,8 +174,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //marker.setIcon(OverlayImage.fromResource(R.drawable.icon);//icon 이미지 변경
                 markers.add(marker);
 
+
                 //마커 클릭시 발생하는 이벤트
                 marker.setOnClickListener( overlay -> {
+
+
+                    Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                    startActivity(intent);
+
+                    intent.putExtra("title", makerlist);
+                    intent.putExtra("x", makerlist2);
+                    intent.putExtra("y", makerlist3);
+
+
+
                     //마커 클릭 시 주유소의 이름을 표시하고 토스트로 화면에 주소 표시
                     //Toast.makeText(this, "hi", Toast.LENGTH_SHORT).show();
                     infoWindow.open(marker);//마커 클릭시 정보창 표시
@@ -213,4 +238,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onProviderDisabled(String provider) {
 
     }
+
+
 }
