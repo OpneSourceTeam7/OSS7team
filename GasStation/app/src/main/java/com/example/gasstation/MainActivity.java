@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     //버튼
     private ImageButton searchButton;
+    //검색창
+    private EditText edit;
 
 
     @Override
@@ -94,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //버튼 위치 설정
         searchButton = (ImageButton)findViewById(R.id.searchButton);
+        edit = (EditText)findViewById(R.id.serachEdit);
 
         //버튼 동작 설정
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 //ActivitySearch 실행
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                String str = edit.getText().toString();
+                intent.putExtra("str", str);
                 startActivity(intent);
             }
         });
@@ -135,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 @Override
                 public void run() {
 
-                    stations = api.searchGas(la, lo); // 주유소 정보 리스트 받아오기 37.8253, 127.5165
+                    stations = api.searchGas(0, la, lo, ""); // 주유소 정보 리스트 받아오기 37.8253, 127.5165
                 }
             };
             searchThread.start();
