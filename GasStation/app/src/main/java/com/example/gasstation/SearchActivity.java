@@ -43,7 +43,7 @@ public class SearchActivity extends AppCompatActivity {
         new Thread(){
             @Override
             public void run() {
-                items = api.searchGas(1, 0, 0, str);
+                items = api.oilSearchName(str);
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -76,12 +76,14 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String str = intent.getStringExtra("str");
+                items.clear();
+                adapter.removeItemAll();
 
 
                 new Thread(){
                     @Override
                     public void run() {
-                        items = api.searchGas(1, 0, 0, str);
+                        items = api.oilSearchName(str);
 
                         runOnUiThread(new Runnable() {
                             @Override

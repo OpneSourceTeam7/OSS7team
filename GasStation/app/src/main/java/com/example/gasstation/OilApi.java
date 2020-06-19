@@ -30,15 +30,16 @@ public class OilApi {
 
     //오피넷에서 발급받은 인증키
     String apiKey="F774200525";
-    ArrayList<Oil> allItems=new ArrayList<Oil>();//모든 주유소
-    ArrayList<Oil> regionItem=new ArrayList<Oil>();//지역화페 가맹점인 주유소
+
+//    ArrayList<Oil> allItems=new ArrayList<Oil>();//모든 주유소
+//    ArrayList<Oil> regionItem=new ArrayList<Oil>();//지역화페 가맹점인 주유소
 
     public OilApi( Context context) {
         mContext = context;
     }
 
     //주유소 지역화폐가맹점 확인
-    private void isRegion(){
+    private void isRegion(Oil gasStation){
 
                 Resources res= mContext.getResources();
 
@@ -52,7 +53,7 @@ public class OilApi {
                     int eventType = xpp.getEventType();
 
                     String tagName;
-                    Oil oil = new Oil();
+                    Double x=0.0,y=0.0;
 
                     while (eventType != XmlPullParser.END_DOCUMENT) {
 
@@ -62,33 +63,20 @@ public class OilApi {
 
                             case XmlPullParser.START_TAG:
                                 tagName = xpp.getName();
-                                if (tagName.equals("CMPNM_NM")) {
-                                    //buffer.append("이름: ");
-                                    xpp.next();
-                                    oil.setTitle(xpp.getText());
-                                    //Log.d(TAG, oil.getTitle());
-                                } else if (tagName.equals("REFINE_ROADNM_ADDR")) {
+                                if (tagName.equals("REFINE_ROADNM_ADDR")) {
                                     //buffer.append("주소: ");
                                     xpp.next();
-                                    oil.setAdress(xpp.getText());
-                                } else if (tagName.equals("TELNO")) {
-                                    //buffer.append("번호: ");
-                                    xpp.next();
-                                    oil.setTel(xpp.getText());
-                                } else if (tagName.equals("REFINE_WGS84_LAT")) {
+                                }else if (tagName.equals("REFINE_WGS84_LAT")) {
                                     //buffer.append("x좌표: ");
                                     xpp.next();
                                     if (xpp.getText() != null)
-                                        oil.setX(Double.parseDouble(xpp.getText()));
-                                } else if (tagName.equals("REFINE_WGS84_LOGT")) {
+                                        x= Double.parseDouble(xpp.getText());
+                                }else if (tagName.equals("REFINE_WGS84_LOGT")) {
                                     //buffer.append("y좌표: ");
                                     xpp.next();
                                     if (xpp.getText() != null)
-                                        oil.setY(Double.parseDouble(xpp.getText()));
-                                } else if (tagName.equals("PRODCD")) {
-                                    //기름 가격
-                                    xpp.next();
-                                } else {
+                                        y= Double.parseDouble(xpp.getText());
+                                }else {
                                     xpp.next();
                                 }
                                 break;
@@ -99,8 +87,10 @@ public class OilApi {
                             case XmlPullParser.END_TAG:
                                 tagName = xpp.getName();
                                 if (tagName.equals("row")) {
-                                    regionItem.add(oil);
-                                    oil = new Oil();
+                                    if( String.format("%.3f",x).equals(String.format("%.3f",gasStation.getX())) & String.format("%.3f",y).equals(String.format("%.3f",gasStation.getY())) ) {
+                                        gasStation.setRegion(true);
+                                    }
+
                                 }
                                 break;
                         }
@@ -116,24 +106,10 @@ public class OilApi {
                     e.printStackTrace();
                 }
 
-                DecimalFormat form = new DecimalFormat("#.##");
-
-                for(int i=0;i < regionItem.size();i++) {
-                    for(int j=0;j < allItems.size();j++) {
-                        if( regionItem.get(i).getAdress()==null | allItems.get(j).getRegion() ) continue;
-                        //if( form.format(regionItem.get(i).getX()).equals(form.format(allItems.get(j).getX())) & form.format(regionItem.get(i).getY()).equals(form.format(allItems.get(j).getY())) ) {
-                        //if( String.format("%.3f",regionItem.get(i).getX()).equals(String.format("%.3f",allItems.get(j).getX())) & String.format("%.3f",regionItem.get(i).getY()).equals(String.format("%.3f",allItems.get(j).getY())) ) {
-                        if( regionItem.get(i).getAdress().equals(allItems.get(j).getAdress()) ){
-                        //Log.d(TAG, "전국:" + allItems.get(j).getTitle() + " 지역:" + regionItem.get(i).getTitle());
-                            allItems.get(j).setRegion(true);
-                        }
-                    }
-                }
-
     }
 
     //주변 주유소 검색
-    private ArrayList<String> oilSearchRadius(Double x, Double y) {
+    public ArrayList<Oil> oilSearchRadius(Double x, Double y) {
 
 
         GeoPoint in_pt = new GeoPoint(y, x);
@@ -141,11 +117,13 @@ public class OilApi {
 
         //Log.d(TAG, "x값:" + katec_pt.x + "  y값:" + katec_pt.y);
 
-        ArrayList<String> oilcode=new ArrayList<String>();//주유소 코드를 저장할 배열리스트
+        ArrayList<Oil> oils=new ArrayList<>();//주유소 코드를 저장할 배열리스트
 
 
         int radius = 5000; //반경(m) //최대 :5000
         String[] prodcd = {"B027", "D047"};// 기름종류 / 휘발유:B027, 경유:D047, 고급휘발유: B034, 실내등유: C004, 자동차부탄: K015)
+
+        try {
 
         for(int pNum=0;pNum < prodcd.length; pNum++) {
             //https://www.opinet.co.kr/api/aroundAll.do?code=" + apiKey + "&x=" + x + ."8&y=" + y + "&radius=" + radius + "&sort=1&prodcd=B027&out=xml
@@ -163,7 +141,7 @@ public class OilApi {
             //위 xml문서의 주소(address)에 스트림을 연결하여 데이터를 읽어오기
 
 
-            try {
+
                 //URL객체생성
                 URL url = new URL(adress);
 
@@ -183,6 +161,8 @@ public class OilApi {
                 int eventType = xpp.getEventType();
 
                 String tagName;
+                Oil oil = new Oil();
+                String oilX="",oilY="";
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
 
@@ -196,9 +176,30 @@ public class OilApi {
                                 //검색한 주유소의 코드번호 추출
                             } else if (tagName.equals("UNI_ID")) {
                                 xpp.next();
-                                //oilcode 리스트에 추가
-                                oilcode.add(xpp.getText());
-                            } else {
+                                //주유소 코드
+                                oil.setCode(xpp.getText());
+                            }else if (tagName.equals("OS_NM")) {
+                                xpp.next();
+                                //주유소 상호명
+                                oil.setTitle(xpp.getText());
+                            }else if (tagName.equals("PRICE")) {
+                                xpp.next();
+                                //주유소 기름 가격
+                                if(pNum==0){
+                                    oil.setH1(Integer.parseInt(xpp.getText()));
+                                }else if(pNum==1){
+                                    oil.setG(Integer.parseInt(xpp.getText()));
+                                }
+
+                            }else if (tagName.equals("GIS_X_COOR")) {
+                                xpp.next();
+                                //주유소 x좌표
+                                oilX=xpp.getText();
+                            }else if (tagName.equals("GIS_Y_COOR")) {
+                                xpp.next();
+                                //주유소 y좌표
+                                oilY=xpp.getText();
+                            }else {
                                 xpp.next();
                             }
                             break;
@@ -208,7 +209,15 @@ public class OilApi {
 
                         case XmlPullParser.END_TAG:
                             tagName = xpp.getName();
+
                             if (tagName.equals("OIL")) {
+                                Tm128 tm = new Tm128(Double.parseDouble(oilX), Double.parseDouble(oilY));
+                                LatLng x2= tm.toLatLng();
+                                oil.setX(x2.latitude);
+                                oil.setY(x2.longitude);
+                                isRegion(oil);
+                                oils.add(oil);
+                                oil = new Oil();
                             }
                             break;
                     }
@@ -216,23 +225,40 @@ public class OilApi {
                     eventType = xpp.next();
                 }//while ..
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
+
 
         }//..for
 
-        return oilcode;
+            for(int i=0;i < oils.size();i++){
+                for(int k=0;k<oils.size();k++){
+                    if(oils.get(i).equals(oils.get(k))){
+                        continue;
+                    }
+                    if(oils.get(i).getCode().equals(oils.get(k).getCode())){
+                        oils.remove(oils.get(k));
+                    }
+                }
+                Log.d(TAG, oils.get(i).getTitle() + i);
+            }
+
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+
+
+        return oils;
     }
 
     //주유소 상호검색
-    private ArrayList<String> oilSearchName(String str) {
+    public ArrayList<Oil> oilSearchName(String str) {
 
-        ArrayList<String> oilcode=new ArrayList<String>();//주유소 코드를 저장할 배열리스트
+        ArrayList<Oil> stations=new ArrayList<>();//주유소 코드를 저장할 배열리스트
 
             String adress = "https://www.opinet.co.kr/api/searchByName.do?code="
                 + apiKey
@@ -258,6 +284,8 @@ public class OilApi {
                 int eventType = xpp.getEventType();
 
                 String tagName;
+                String oilX="",oilY="";
+                Oil oil = new Oil();
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
 
@@ -272,7 +300,27 @@ public class OilApi {
                             } else if (tagName.equals("UNI_ID")) {
                                 xpp.next();
                                 //oilcode 리스트에 추가
-                                oilcode.add(xpp.getText());
+                                oil.setCode(xpp.getText());
+                            }else if (tagName.equals("OS_NM")) {
+                                xpp.next();
+                                //주유소 상호명
+                                oil.setTitle(xpp.getText());
+                            }else if (tagName.equals("GIS_X_COOR")) {
+                                xpp.next();
+                                //주유소 x좌표
+                                oilX=xpp.getText();
+                            }else if (tagName.equals("GIS_Y_COOR")) {
+                                xpp.next();
+                                //주유소 y좌표
+                                oilY=xpp.getText();
+                            }else if(tagName.equals("NEW_ADR")){
+                                //buffer.append("주소: ");
+                                xpp.next();
+                                oil.setAdress(xpp.getText());
+                            }else if(tagName.equals("TEL")){
+                                //buffer.append("번호: ");
+                                xpp.next();
+                                oil.setTel(xpp.getText());
                             } else {
                                 xpp.next();
                             }
@@ -284,6 +332,13 @@ public class OilApi {
                         case XmlPullParser.END_TAG:
                             tagName = xpp.getName();
                             if (tagName.equals("OIL")) {
+                                Tm128 tm = new Tm128(Double.parseDouble(oilX), Double.parseDouble(oilY));
+                                LatLng x2= tm.toLatLng();
+                                oil.setX(x2.latitude);
+                                oil.setY(x2.longitude);
+                                isRegion(oil);
+                                stations.add(oil);
+                                oil = new Oil();
                             }
                             break;
                     }
@@ -299,145 +354,127 @@ public class OilApi {
                 e.printStackTrace();
             }
 
-        return oilcode;
+
+        return stations;
     }
 
-
-    public ArrayList<Oil> searchGas(int num, double xx, double yy, String str) {
+    //주유소 상세검색
+    public Oil detailGas(String str) {
         //네트워크를 통해서 xml문서를 읽어오기..
 
-
-                allItems.clear();
-
-                ArrayList<String> oils = new ArrayList<String>();
-
-                //0인 경우 내 주변 주유소 검색
-                if(num == 0) {
-                    //내 주변 주유소들의 코드를 가지고 주유소 상세검색
-                    oils = oilSearchRadius(xx, yy);
-                }else if(num ==1){  //1인 경우 상호명으로 주유소 검색
-                    //검색한 주유소들의 코드를 가지고 주유소 상세검색
-                    oils = oilSearchName(str);
-                }
-                int i=0;
-                while(i<oils.size()){
-                    String adress = "https://www.opinet.co.kr/api/detailById.do?code=" + apiKey + "&id=" + oils.get(i) + "&out=xml";
+        String address = "https://www.opinet.co.kr/api/detailById.do?code=" + apiKey + "&id=" + str + "&out=xml";
+        Oil oil = new Oil();
 
 
-                    try {
-                        //URL객체생성
-                        URL url= new URL(adress);
+            try {
+                //URL객체생성
+                URL url= new URL(address);
 
-                        //Stream 열기
-                        InputStream is= url.openStream(); //바이트스트림
-                        //문자스트림으로 변환
-                        InputStreamReader isr=new InputStreamReader(is);
+                //Stream 열기
+                InputStream is= url.openStream(); //바이트스트림
+                //문자스트림으로 변환
+                InputStreamReader isr=new InputStreamReader(is);
 
-                        //읽어들인 XML문서를 파싱해주는 객체 생성
-                        XmlPullParserFactory factory= XmlPullParserFactory.newInstance();
-                        XmlPullParser xpp=factory.newPullParser();
-                        xpp.setInput(isr);
+                //읽어들인 XML문서를 파싱해주는 객체 생성
+                XmlPullParserFactory factory= XmlPullParserFactory.newInstance();
+                XmlPullParser xpp=factory.newPullParser();
+                xpp.setInput(isr);
 
-                        //xpp를 이용해서 xml문서를 분석
+                //xpp를 이용해서 xml문서를 분석
 
-                        //xpp.next();   //XmlPullParser는 시작부터 문서의 시작점에 있으므로 next해주면 START_DOCUMENT를 못만난다.
-                        int eventType= xpp.getEventType();
+                //xpp.next();   //XmlPullParser는 시작부터 문서의 시작점에 있으므로 next해주면 START_DOCUMENT를 못만난다.
+                int eventType= xpp.getEventType();
 
-                        String tagName;
-                        Oil oil = new Oil();
-                        String oilCode= null;
-                        String x="",y="";
+                String tagName;
 
-                        while(eventType!=XmlPullParser.END_DOCUMENT){
+                String oilCode= null;
+                String x="",y="";
 
-                            switch (eventType){
-                                case XmlPullParser.START_DOCUMENT:
-                                    break;
+                while(eventType!=XmlPullParser.END_DOCUMENT){
 
-                                case XmlPullParser.START_TAG:
-                                    tagName=xpp.getName();
-                                    if(tagName.equals("OIL")){
+                    switch (eventType){
+                        case XmlPullParser.START_DOCUMENT:
+                            break;
 
-                                    }else if(tagName.equals("UNI_ID")){
-                                        //buffer.append("코드: ");
-                                        xpp.next();
-                                        oil.setCode(xpp.getText());
-                                    }else if(tagName.equals("OS_NM")){
-                                        //buffer.append("이름: ");
-                                        xpp.next();
-                                        oil.setTitle(xpp.getText());
-                                        Log.d(TAG, oil.getTitle());
-                                    }else if(tagName.equals("NEW_ADR")){
-                                        //buffer.append("주소: ");
-                                        xpp.next();
-                                        oil.setAdress(xpp.getText());
-                                    }else if(tagName.equals("TEL")){
-                                        //buffer.append("번호: ");
-                                        xpp.next();
-                                        oil.setTel(xpp.getText());
-                                    }else if(tagName.equals("GIS_X_COOR")){
-                                        //buffer.append("x좌표: ");
-                                        xpp.next();
-                                        x= xpp.getText();
-                                    }else if(tagName.equals("GIS_Y_COOR")){
-                                        //buffer.append("y좌표: ");
-                                        xpp.next();
-                                        y=xpp.getText();
-                                    }else if(tagName.equals("PRODCD")) {
-                                        //기름 가격
-                                        xpp.next();
-                                        oilCode = xpp.getText();
-                                    } else if(tagName.equals("PRICE")){
-                                        //휘발유:B027, 경유:D047, 고급휘발유: B034, 실내등유: C004, 자동차부탄(LPG): K015
-                                        if(oilCode.equals("B027")){ //휘발유
-                                            xpp.next();
-                                            oil.setH1(Integer.parseInt(xpp.getText()));
-                                        }else if(oilCode.equals("D047")){ //경유
-                                            xpp.next();
-                                            oil.setG(Integer.parseInt(xpp.getText()));
-                                        }else if(oilCode.equals("B034")){ //고급휘발유
-                                            xpp.next();
-                                            oil.setH2(Integer.parseInt(xpp.getText()));
-                                        }else if(oilCode.equals("C004")){ //실내등유
-                                            xpp.next();
-                                            oil.setS(Integer.parseInt(xpp.getText()));
-                                        }else if(oilCode.equals("K015")){ //LPG
-                                            xpp.next();
-                                            oil.setB(Integer.parseInt(xpp.getText()));
-                                        }
-                                    }else {
-                                        xpp.next();
-                                    }
-                                    break;
+                        case XmlPullParser.START_TAG:
+                            tagName=xpp.getName();
+                            if(tagName.equals("OIL")){
 
-                                case XmlPullParser.TEXT:
-                                    break;
-
-                                case XmlPullParser.END_TAG:
-                                    tagName = xpp.getName();
-                                    if(tagName.equals("OIL")){
-                                        Tm128 tm = new Tm128(Double.parseDouble(x), Double.parseDouble(y));
-                                        LatLng x2= tm.toLatLng();
-                                        oil.setX(x2.latitude);
-                                        oil.setY(x2.longitude);
-                                        allItems.add(oil);
-                                    }
-                                    break;
+                            }else if(tagName.equals("UNI_ID")){
+                                //buffer.append("코드: ");
+                                xpp.next();
+                                oil.setCode(xpp.getText());
+                            }else if(tagName.equals("OS_NM")){
+                                //buffer.append("이름: ");
+                                xpp.next();
+                                oil.setTitle(xpp.getText());
+                                Log.d(TAG, oil.getTitle());
+                            }else if(tagName.equals("NEW_ADR")){
+                                //buffer.append("주소: ");
+                                xpp.next();
+                                oil.setAdress(xpp.getText());
+                            }else if(tagName.equals("TEL")){
+                                //buffer.append("번호: ");
+                                xpp.next();
+                                oil.setTel(xpp.getText());
+                            }else if(tagName.equals("GIS_X_COOR")){
+                                //buffer.append("x좌표: ");
+                                xpp.next();
+                                x= xpp.getText();
+                            }else if(tagName.equals("GIS_Y_COOR")){
+                                //buffer.append("y좌표: ");
+                                xpp.next();
+                                y=xpp.getText();
+                            }else if(tagName.equals("PRODCD")) {
+                                //기름 가격
+                                xpp.next();
+                                oilCode = xpp.getText();
+                            } else if(tagName.equals("PRICE")){
+                                //휘발유:B027, 경유:D047, 고급휘발유: B034, 실내등유: C004, 자동차부탄(LPG): K015
+                                if(oilCode.equals("B027")){ //휘발유
+                                    xpp.next();
+                                    oil.setH1(Integer.parseInt(xpp.getText()));
+                                }else if(oilCode.equals("D047")){ //경유
+                                    xpp.next();
+                                    oil.setG(Integer.parseInt(xpp.getText()));
+                                }else if(oilCode.equals("B034")){ //고급휘발유
+                                    xpp.next();
+                                    oil.setH2(Integer.parseInt(xpp.getText()));
+                                }else if(oilCode.equals("C004")){ //실내등유
+                                    xpp.next();
+                                    oil.setS(Integer.parseInt(xpp.getText()));
+                                }else if(oilCode.equals("K015")){ //LPG
+                                    xpp.next();
+                                    oil.setB(Integer.parseInt(xpp.getText()));
+                                }
+                            }else {
+                                xpp.next();
                             }
+                            break;
 
-                            eventType=xpp.next();
-                        }//while ..
+                        case XmlPullParser.TEXT:
+                            break;
 
+                        case XmlPullParser.END_TAG:
+                            tagName = xpp.getName();
+                            if(tagName.equals("OIL")){
+                                Tm128 tm = new Tm128(Double.parseDouble(x), Double.parseDouble(y));
+                                LatLng x2= tm.toLatLng();
+                                oil.setX(x2.latitude);
+                                oil.setY(x2.longitude);
+                            }
+                            break;
+                    }
 
-                    } catch (MalformedURLException e) { e.printStackTrace();} catch (IOException e) {e.printStackTrace();} catch (XmlPullParserException e) {e.printStackTrace();}
+                    eventType=xpp.next();
+                }//while ..
 
+                return oil;
 
-                    i++;
-                } // olis while 끝..
-                isRegion();
-                return allItems;
+            } catch (MalformedURLException e) { e.printStackTrace();} catch (IOException e) {e.printStackTrace();} catch (XmlPullParserException e) {e.printStackTrace();}
+
+        return oil;
 
     }
-
 
 }

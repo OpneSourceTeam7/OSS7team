@@ -151,8 +151,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Thread searchThread = new Thread() {
                 @Override
                 public void run() {
-
-                    stations = api.searchGas(0, la, lo, ""); // 주유소 정보 리스트 받아오기 37.8253, 127.5165
+                    stations = api.oilSearchRadius(la, lo); // 주유소 정보 리스트 받아오기 37.8253, 127.5165
                 }
             };
             searchThread.start();
@@ -160,14 +159,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             ArrayList<Marker> markers = new ArrayList<Marker>(); //검색한 주유소들의 좌표값을 이용하여 지도에 모든 주유소 마커 표시
 
-             ArrayList<String> makerlist = new ArrayList<>();
-             ArrayList<Double> makerlist2 = new ArrayList<>();
-             ArrayList<Double> makerlist3 = new ArrayList<>();
-            for(int b = 0; b<stations.size(); b++){
-                makerlist.add(stations.get(b).getTitle());
-                makerlist2.add(stations.get(b).getX());
-                makerlist3.add(stations.get(b).getY());
-            }
+//             ArrayList<String> makerlist = new ArrayList<>();
+//             ArrayList<Double> makerlist2 = new ArrayList<>();
+//             ArrayList<Double> makerlist3 = new ArrayList<>();
+//            for(int b = 0; b<stations.size(); b++){
+//                makerlist.add(stations.get(b).getTitle());
+//                makerlist2.add(stations.get(b).getX());
+//                makerlist3.add(stations.get(b).getY());
+//            }
 
             for(int i=0;i<stations.size();i++) {
                 //Tm128 tm = new Tm128(Double.parseDouble(oilStation.get(i).getX()), Double.parseDouble(oilStation.get(i).getY()));
@@ -177,11 +176,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 marker.setWidth(50);//마커 가로길이
                 marker.setHeight(50);//마커 세로길이
                 marker.setCaptionText(stations.get(i).getTitle());
-                if(stations.get(i).getRegion()){ //지역화폐가맹점인경우 색깔변경
+                if(!stations.get(i).getRegion()){ //지역화폐가맹점이 아닌 경우 색깔변경
                     marker.setIcon(MarkerIcons.BLACK);//마커색 변경
                     marker.setIconTintColor(Color.RED);
                 }
-                marker.setTag(stations.get(i).getAdress()); // 마커의 tag를 클릭하면 뜨는 창
+                //marker.setTag(stations.get(i).getAdress()); // 마커의 tag를 클릭하면 뜨는 창
                 marker.setPosition(lat);//마커의 위치설정
                 marker.setMap(naverMap);//마커르 지도에 표시
                 //marker.setIcon(OverlayImage.fromResource(R.drawable.icon);//icon 이미지 변경
@@ -195,9 +194,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Intent intent = new Intent(MainActivity.this, InfoActivity.class);
                     startActivity(intent);
 
-                    intent.putExtra("title", makerlist);
-                    intent.putExtra("x", makerlist2);
-                    intent.putExtra("y", makerlist3);
+//                    intent.putExtra("title", makerlist);
+//                    intent.putExtra("x", makerlist2);
+//                    intent.putExtra("y", makerlist3);
 
 
 

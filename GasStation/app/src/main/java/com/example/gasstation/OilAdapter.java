@@ -62,7 +62,7 @@ public class OilAdapter extends BaseAdapter {
 
         holder.oilTitle.setText(oil.getTitle());
         holder.oilAdress.setText(oil.getAdress());
-        holder.oilTel.setText("지역화폐" + oil.getRegion());
+        holder.oilTel.setText(oil.getTel());
 
         return convertView;
     }
