@@ -78,9 +78,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         onLocationChanged(location);
 
 
-        //버튼 동작 설정
+        //버튼 위치 설정
         searchButton = (ImageButton)findViewById(R.id.searchButton);
 
+        //버튼 동작 설정
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
