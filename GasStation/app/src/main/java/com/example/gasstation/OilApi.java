@@ -229,14 +229,96 @@ public class OilApi {
         return oilcode;
     }
 
-    public ArrayList<Oil> searchGas(Double xx, Double yy) {
+    //주유소 상호검색
+    private ArrayList<String> oilSearchName(String str) {
+
+        ArrayList<String> oilcode=new ArrayList<String>();//주유소 코드를 저장할 배열리스트
+
+            String adress = "https://www.opinet.co.kr/api/searchByName.do?code="
+                + apiKey
+                + "&out=xml&osnm=" + str + "&area=02"; //경기도 시도코드:02
+
+            try {
+                //URL객체생성
+                URL url = new URL(adress);
+
+                //Stream 열기
+                InputStream is = url.openStream(); //바이트스트림
+                //문자스트림으로 변환
+                InputStreamReader isr = new InputStreamReader(is);
+
+                //읽어들인 XML문서를 파싱해주는 객체 생성
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                XmlPullParser xpp = factory.newPullParser();
+                xpp.setInput(isr);
+
+                //xpp를 이용해서 xml문서를 분석
+
+                //xpp.next();   //XmlPullParser는 시작부터 문서의 시작점에 있으므로 next해주면 START_DOCUMENT를 못만난다.
+                int eventType = xpp.getEventType();
+
+                String tagName;
+
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+
+                    switch (eventType) {
+                        case XmlPullParser.START_DOCUMENT:
+                            break;
+
+                        case XmlPullParser.START_TAG:
+                            tagName = xpp.getName();
+                            if (tagName.equals("OIL")) {
+                                //검색한 주유소의 코드번호 추출
+                            } else if (tagName.equals("UNI_ID")) {
+                                xpp.next();
+                                //oilcode 리스트에 추가
+                                oilcode.add(xpp.getText());
+                            } else {
+                                xpp.next();
+                            }
+                            break;
+
+                        case XmlPullParser.TEXT:
+                            break;
+
+                        case XmlPullParser.END_TAG:
+                            tagName = xpp.getName();
+                            if (tagName.equals("OIL")) {
+                            }
+                            break;
+                    }
+
+                    eventType = xpp.next();
+                }//while ..
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            }
+
+        return oilcode;
+    }
+
+
+    public ArrayList<Oil> searchGas(int num, double xx, double yy, String str) {
         //네트워크를 통해서 xml문서를 읽어오기..
 
 
                 allItems.clear();
 
-                //검색한 주유소들의 코드를 가지고 주변 주유소 상세검색
-                ArrayList<String> oils= oilSearchRadius(xx, yy);
+                ArrayList<String> oils = new ArrayList<String>();
+
+                //0인 경우 내 주변 주유소 검색
+                if(num == 0) {
+                    //내 주변 주유소들의 코드를 가지고 주유소 상세검색
+                    oils = oilSearchRadius(xx, yy);
+                }else if(num ==1){  //1인 경우 상호명으로 주유소 검색
+                    //검색한 주유소들의 코드를 가지고 주유소 상세검색
+                    oils = oilSearchName(str);
+                }
                 int i=0;
                 while(i<oils.size()){
                     String adress = "https://www.opinet.co.kr/api/detailById.do?code=" + apiKey + "&id=" + oils.get(i) + "&out=xml";

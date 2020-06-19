@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <ImageView
         android:id="@+id/searchBG"
         android:layout_width="0dp"
@@ -58,7 +60,7 @@
         app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/listview1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
@@ -69,5 +71,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/serachEdit"></ListView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
