@@ -24,6 +24,7 @@
             android:name="com.naver.maps.map.MapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </FrameLayout>
 
     <ImageView
@@ -62,5 +63,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
+
+    <ImageView
+        android:id="@+id/resetBG"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/editbox_background_normal" />
+
+    <ImageButton
+        android:id="@+id/resetButton"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/resetBG"
+        app:layout_constraintEnd_toEndOf="@+id/resetBG"
+        app:layout_constraintStart_toStartOf="@+id/resetBG"
+        app:layout_constraintTop_toTopOf="@+id/resetBG"
+        app:srcCompat="@mipmap/resetico" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     //버튼
     private ImageButton searchButton;
+    private ImageButton resetButton;
 
 
     @Override
@@ -92,8 +93,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
+
         //버튼 위치 설정
         searchButton = (ImageButton)findViewById(R.id.searchButton);
+        resetButton = (ImageButton)findViewById(R.id.resetButton);
 
         //버튼 동작 설정
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +107,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(intent);
             }
         });
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
     }
 
@@ -213,4 +221,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onProviderDisabled(String provider) {
 
     }
+
 }
+
