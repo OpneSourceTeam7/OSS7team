@@ -20,8 +20,13 @@
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="bv2cn2n8ui" />
 
+<<<<<<< HEAD
         <activity android:name=".InfoActivity"/>
         <activity android:name=".SearchActivity"/>
+=======
+        <activity android:name=".InfoActivity"></activity>
+        <activity android:name=".SearchActivity"></activity>
+>>>>>>> a6671025c4c38bcbe94573404b532e23b53f36be
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

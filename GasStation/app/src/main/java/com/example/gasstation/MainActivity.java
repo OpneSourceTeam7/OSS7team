@@ -6,6 +6,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -35,15 +36,25 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.util.FusedLocationSource;
+import com.naver.maps.map.util.MarkerIcons;
+
+import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback,LocationListener {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener{
     private static final int ACCESS_LOCATION_PERMISSON_REQUEST_COME = 100;
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
     private LocationManager locationManager;
     private LocationListener locationListener;
+
+    private InfoWindow infoWindow = new InfoWindow();
+
+    private ArrayList<Oil> stations=new ArrayList<Oil>(); //주유소 현황
+
+    double la,lo;
 
     //버튼
     private ImageButton searchButton;
@@ -66,16 +77,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
+//               public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                                                      int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
-        location.getLongitude();
-        location.getLatitude();
-        onLocationChanged(location);
+        Location location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+        la = location.getLatitude();
+        lo = location.getLongitude();
+
+        //onLocationChanged(location);
+
+
 
 
         //버튼 위치 설정
@@ -112,12 +126,77 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         UiSettings uiSettings = naverMap.getUiSettings();
         uiSettings.setLocationButtonEnabled(true);
 
+        naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+
+
+        try{
+            OilApi api = new OilApi(this);
+            Thread searchThread = new Thread() {
+                @Override
+                public void run() {
+
+                    stations = api.searchGas(la, lo); // 주유소 정보 리스트 받아오기 37.8253, 127.5165
+                }
+            };
+            searchThread.start();
+            searchThread.join();
+
+            ArrayList<Marker> markers = new ArrayList<Marker>(); //검색한 주유소들의 좌표값을 이용하여 지도에 모든 주유소 마커 표시
+
+            for(int i=0;i<stations.size();i++) {
+                //Tm128 tm = new Tm128(Double.parseDouble(oilStation.get(i).getX()), Double.parseDouble(oilStation.get(i).getY()));
+                //LatLng lat = tm.toLatLng();
+                LatLng lat = new LatLng(stations.get(i).getX(), stations.get(i).getY());
+                Marker marker = new Marker();
+                marker.setWidth(50);//마커 가로길이
+                marker.setHeight(50);//마커 세로길이
+                marker.setCaptionText(stations.get(i).getTitle());
+                if(stations.get(i).getRegion()){ //지역화폐가맹점인경우 색깔변경
+                    marker.setIcon(MarkerIcons.BLACK);//마커색 변경
+                    marker.setIconTintColor(Color.RED);
+                }
+                marker.setTag(stations.get(i).getAdress()); // 마커의 tag를 클릭하면 뜨는 창
+                marker.setPosition(lat);//마커의 위치설정
+                marker.setMap(naverMap);//마커르 지도에 표시
+                //marker.setIcon(OverlayImage.fromResource(R.drawable.icon);//icon 이미지 변경
+                markers.add(marker);
+
+                //마커 클릭시 발생하는 이벤트
+                marker.setOnClickListener( overlay -> {
+                    //마커 클릭 시 주유소의 이름을 표시하고 토스트로 화면에 주소 표시
+                    //Toast.makeText(this, "hi", Toast.LENGTH_SHORT).show();
+                    infoWindow.open(marker);//마커 클릭시 정보창 표시
+                    // 이벤트 소비, OnMapClick 이벤트는 발생하지 않음
+                    return true;
+                });
+
+
+            }
+
+        } catch(NullPointerException e) { e.printStackTrace();} catch(InterruptedException e) { e.printStackTrace();}
+
+
+        //마커 위에 텍스트를 표시하는 것
+        infoWindow.setAdapter(new InfoWindow.DefaultTextAdapter(MainActivity.this) {
+            @NonNull
+            @Override
+            public CharSequence getText(@NonNull InfoWindow infoWindow) {
+                // 정보 창이 열린 마커의 tag를 텍스트로 노출하도록 반환
+                return (CharSequence)infoWindow.getMarker().getTag();
+            }
+        });
+
+
 
     }
 
+
     @Override
     public void onLocationChanged(Location location) {
+        double la = location.getLatitude();
+        double lo = location.getLongitude();
 
+        Log.d("map", "좌표값 변경됨");
     }
 
     @Override
