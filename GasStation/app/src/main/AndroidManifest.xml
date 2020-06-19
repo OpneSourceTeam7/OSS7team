@@ -20,9 +20,8 @@
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="bv2cn2n8ui" />
 
-        // 액티비티 선하는 곳
-        <activity android:name=".InfoActivity"></activity>
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".InfoActivity"/>
+        <activity android:name=".SearchActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
