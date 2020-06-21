@@ -56,9 +56,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private InfoWindow infoWindow = new InfoWindow();
 
-    private ArrayList<Oil> stations=new ArrayList<Oil>(); //주유소 현황
+    private ArrayList<Oil> stations = new ArrayList<Oil>(); //주유소 현황
 
-    double la,lo;
+    double la, lo;
+
+    ArrayList<Marker> markers = new ArrayList<Marker>(); //마커 저장
+
+
+    Location location;
 
     //버튼
     private ImageButton searchButton;
@@ -76,34 +81,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-//               public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                                                      int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
-        la = location.getLatitude();
-        lo = location.getLongitude();
-
-        //onLocationChanged(location);
-
-
-
-
+        onLocationChanged(location);
 
         //버튼 위치 설정
-        searchButton = (ImageButton)findViewById(R.id.searchButton);
-        resetButton = (ImageButton)findViewById(R.id.resetButton);
-        edit = (EditText)findViewById(R.id.serachEdit);
+        searchButton = (ImageButton) findViewById(R.id.searchButton);
+        resetButton = (ImageButton) findViewById(R.id.resetButton);
+        edit = (EditText) findViewById(R.id.serachEdit);
 
         //버튼 동작 설정
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +102,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //리셋 버튼 동작
+                onLocationChanged(location);
+                
+                onMapReady(naverMap);
             }
         });
 
@@ -157,8 +143,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             searchThread.start();
             searchThread.join();
 
-            ArrayList<Marker> markers = new ArrayList<Marker>(); //검색한 주유소들의 좌표값을 이용하여 지도에 모든 주유소 마커 표시
 
+             //검색한 주유소들의 좌표값을 이용하여 지도에 모든 주유소 마커 표시
 //             ArrayList<String> makerlist = new ArrayList<>();
 //             ArrayList<Double> makerlist2 = new ArrayList<>();
 //             ArrayList<Double> makerlist3 = new ArrayList<>();
@@ -230,10 +216,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onLocationChanged(Location location) {
-        double la = location.getLatitude();
-        double lo = location.getLongitude();
-
-        Log.d("map", "좌표값 변경됨");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+//               public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                                                      int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+        la = location.getLatitude();
+        lo = location.getLongitude();
     }
 
     @Override
