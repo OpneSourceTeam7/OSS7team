@@ -13,8 +13,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
+import android.view.inputmethod.EditorInfo;
 import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -104,11 +106,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 //리셋 버튼 동작
                 onLocationChanged(location);
-                
+
                 onMapReady(naverMap);
             }
         });
-
     }
 
     @Override
@@ -188,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     //마커 클릭 시 주유소의 이름을 표시하고 토스트로 화면에 주소 표시
                     //Toast.makeText(this, "hi", Toast.LENGTH_SHORT).show();
-                    infoWindow.open(marker);//마커 클릭시 정보창 표시
+                    //infoWindow.open(marker);//마커 클릭시 정보창 표시
                     // 이벤트 소비, OnMapClick 이벤트는 발생하지 않음
                     return true;
                 });
@@ -246,6 +247,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onProviderDisabled(String provider) {
+
+    }
+
+    public void markerSet() {
 
     }
 

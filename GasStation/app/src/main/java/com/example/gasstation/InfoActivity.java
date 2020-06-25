@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -63,7 +64,12 @@ public class InfoActivity extends AppCompatActivity {
         g.setText(item.getG()+"원");
         addr.setText(item.getAdress());
 
+        //버튼 동작 설정
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
-
-
 }
