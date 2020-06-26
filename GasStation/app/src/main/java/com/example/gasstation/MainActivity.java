@@ -47,6 +47,8 @@ import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.util.MarkerIcons;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private InfoWindow infoWindow = new InfoWindow();
 
     private ArrayList<Oil> stations = new ArrayList<Oil>(); //주유소 현황
+    private Map<Marker, Oil> map = new HashMap<Marker, Oil>();//마커, 주유소 매칭시키기위한 맵
 
     double la, lo;
 
@@ -106,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 //리셋 버튼 동작
                 onLocationChanged(location);
-
                 onMapReady(naverMap);
             }
         });
@@ -163,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 marker.setWidth(50);//마커 가로길이
                 marker.setHeight(50);//마커 세로길이
                 marker.setCaptionText(stations.get(i).getTitle());
+                marker.setSubCaptionText("휘발유:" + stations.get(i).getH1() + ", 경유:" + stations.get(i).getG());
                 if(!stations.get(i).getRegion()){ //지역화폐가맹점이 아닌 경우 색깔변경
                     marker.setIcon(MarkerIcons.BLACK);//마커색 변경
                     marker.setIconTintColor(Color.RED);
@@ -177,24 +180,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //마커 클릭시 발생하는 이벤트
                 marker.setOnClickListener( overlay -> {
 
-
+                    Oil oil = map.get(marker);
                     Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                    intent.putExtra("oil", oil);
                     startActivity(intent);
 
-//                    intent.putExtra("title", makerlist);
-//                    intent.putExtra("x", makerlist2);
-//                    intent.putExtra("y", makerlist3);
-
-
-
-                    //마커 클릭 시 주유소의 이름을 표시하고 토스트로 화면에 주소 표시
-                    //Toast.makeText(this, "hi", Toast.LENGTH_SHORT).show();
-                    //infoWindow.open(marker);//마커 클릭시 정보창 표시
-                    // 이벤트 소비, OnMapClick 이벤트는 발생하지 않음
                     return true;
                 });
 
-
+                map.put(marker, stations.get(i)); //현재 마커에 주유소 정보 맵핑
             }
 
         } catch(NullPointerException e) { e.printStackTrace();} catch(InterruptedException e) { e.printStackTrace();}
@@ -233,6 +227,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
         la = location.getLatitude();
         lo = location.getLongitude();
+
+        //현재 모든 자료 초기화
+        stations.clear();
+        markers.clear();
+        map.clear();
     }
 
     @Override

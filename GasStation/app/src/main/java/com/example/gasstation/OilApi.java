@@ -217,6 +217,7 @@ public class OilApi {
 
         int radius = 5000; //반경(m) //최대 :5000
         String[] prodcd = {"B027", "D047"};// 기름종류 / 휘발유:B027, 경유:D047, 고급휘발유: B034, 실내등유: C004, 자동차부탄: K015)
+        Oil oil = new Oil();
 
         try {
 
@@ -256,7 +257,7 @@ public class OilApi {
                 int eventType = xpp.getEventType();
 
                 String tagName;
-                Oil oil = new Oil();
+
                 String oilX="",oilY="";
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -330,6 +331,7 @@ public class OilApi {
                         continue;
                     }
                     if(oils.get(i).getCode().equals(oils.get(k).getCode())){
+                        oils.get(i).setG(oils.get(k).getG());
                         oils.remove(oils.get(k));
                     }
                 }

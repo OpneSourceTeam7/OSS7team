@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ public class InfoActivity extends AppCompatActivity {
     private TextView g;//경유
     private TextView addr;//주소
 
+    private EditText edit;
+
     OilApi api = new OilApi(this);
     Oil item= new Oil();
 
@@ -39,6 +42,8 @@ public class InfoActivity extends AppCompatActivity {
         h = (TextView)findViewById((R.id.gasolineInfo));
         g = (TextView)findViewById((R.id.dieselInfo));
         addr = (TextView)findViewById((R.id.addrInfo2));
+
+        edit = (EditText) findViewById(R.id.serachEdit);
 
         //String str = intent.getStringExtra("str");
         intent = getIntent();
@@ -69,6 +74,17 @@ public class InfoActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InfoActivity.this, SearchActivity.class);
+                String str = edit.getText().toString();
+                intent.putExtra("str", str);
+                startActivity(intent);
                 finish();
             }
         });

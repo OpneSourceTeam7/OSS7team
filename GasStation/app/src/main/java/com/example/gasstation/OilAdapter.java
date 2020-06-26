@@ -41,9 +41,7 @@ public class OilAdapter extends BaseAdapter {
             holder.oilAdress = (TextView) convertView.findViewById(R.id.oil_adr);
             holder.oilTel = (TextView) convertView.findViewById(R.id.oil_tel);
 
-            holder.oilH1 = (TextView) convertView.findViewById(R.id.oil_h1);
-            holder.oilG = (TextView) convertView.findViewById(R.id.oil_g);
-            holder.oilH2 = (TextView) convertView.findViewById(R.id.oil_h2);
+            holder.oilRegion = (TextView) convertView.findViewById(R.id.oil_region);
             //holder.oilS = (TextView) convertView.findViewById(R.id.oil_s);
             //holder.oilB = (TextView) convertView.findViewById(R.id.oil_b);
 
@@ -54,11 +52,8 @@ public class OilAdapter extends BaseAdapter {
 
         Oil oil = listCustom.get(position);
 
-        if(oil.getH1() > 0) holder.oilH1.setText("휘발유: " + oil.getH1());
-        if(oil.getG() > 0) holder.oilG.setText("경유: " + oil.getG());
-        if(oil.getH2() > 0) holder.oilH2.setText("고급휘발유: " + oil.getH2());
-        //if(oil.getS() > 0) holder.oilS.setText("실내등유: " + oil.getS());
-        //if(oil.getB() > 0) holder.oilB.setText("LPG: " + oil.getB());
+        if(oil.getRegion()) holder.oilRegion.setText("지역화폐: O");
+        else holder.oilRegion.setText("지역화폐: X");
 
         holder.oilTitle.setText(oil.getTitle());
         holder.oilAdress.setText(oil.getAdress());
@@ -72,7 +67,7 @@ public class OilAdapter extends BaseAdapter {
         TextView oilAdress;
         TextView oilTel;
 
-        TextView oilH1;
+        TextView oilRegion;
         TextView oilG;
         TextView oilH2;
         TextView oilS;

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -19,6 +20,7 @@ public class SearchActivity extends AppCompatActivity {
     private ListView listView;
     private ImageButton searchButton;
     private ImageButton backButton;
+    private EditText edit;
 
     OilApi api = new OilApi(this);
     ArrayList<Oil> items =new ArrayList<Oil>();
@@ -34,6 +36,7 @@ public class SearchActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listview1);
         searchButton = (ImageButton)findViewById(R.id.searchButton);
         backButton = (ImageButton)findViewById(R.id.backButton);
+        edit = (EditText) findViewById(R.id.serachEdit);
 
         listView.setAdapter(adapter);
 
@@ -75,7 +78,7 @@ public class SearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = intent.getStringExtra("str");
+                String str = edit.getText().toString();
                 items.clear();
                 adapter.removeItemAll();
 
