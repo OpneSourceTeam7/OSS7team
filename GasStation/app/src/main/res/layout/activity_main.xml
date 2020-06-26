@@ -48,6 +48,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="58dp"
         android:hint="검색"
+        android:imeOptions="actionSearch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,26 +67,26 @@
 
     <ImageView
         android:id="@+id/resetBG"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="48dp"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/editbox_background_normal" />
+        app:srcCompat="@android:drawable/editbox_dropdown_dark_frame" />
 
     <ImageButton
         android:id="@+id/resetButton"
         style="@style/Widget.AppCompat.ImageButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="#00FFFFFF"
-        android:scaleType="fitCenter"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="@+id/resetBG"
         app:layout_constraintEnd_toEndOf="@+id/resetBG"
         app:layout_constraintStart_toStartOf="@+id/resetBG"
         app:layout_constraintTop_toTopOf="@+id/resetBG"
-        app:srcCompat="@mipmap/resetico" />
+        app:srcCompat="@android:drawable/stat_notify_sync" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

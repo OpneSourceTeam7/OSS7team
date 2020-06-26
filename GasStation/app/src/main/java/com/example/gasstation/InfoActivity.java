@@ -64,6 +64,8 @@ public class InfoActivity extends AppCompatActivity {
         g.setText(item.getG()+"원");
         addr.setText(item.getAdress());
 
+
+        //버튼 동작 설정
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +74,4 @@ public class InfoActivity extends AppCompatActivity {
         });
 
     }
-
-
 }
