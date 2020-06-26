@@ -147,19 +147,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             searchThread.join();
 
 
-             //검색한 주유소들의 좌표값을 이용하여 지도에 모든 주유소 마커 표시
-//             ArrayList<String> makerlist = new ArrayList<>();
-//             ArrayList<Double> makerlist2 = new ArrayList<>();
-//             ArrayList<Double> makerlist3 = new ArrayList<>();
-//            for(int b = 0; b<stations.size(); b++){
-//                makerlist.add(stations.get(b).getTitle());
-//                makerlist2.add(stations.get(b).getX());
-//                makerlist3.add(stations.get(b).getY());
-//            }
 
             for(int i=0;i<stations.size();i++) {
-                //Tm128 tm = new Tm128(Double.parseDouble(oilStation.get(i).getX()), Double.parseDouble(oilStation.get(i).getY()));
-                //LatLng lat = tm.toLatLng();
                 LatLng lat = new LatLng(stations.get(i).getX(), stations.get(i).getY());
                 Marker marker = new Marker();
                 marker.setWidth(50);//마커 가로길이
@@ -170,10 +159,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     marker.setIcon(MarkerIcons.BLACK);//마커색 변경
                     marker.setIconTintColor(Color.RED);
                 }
-                //marker.setTag(stations.get(i).getAdress()); // 마커의 tag를 클릭하면 뜨는 창
                 marker.setPosition(lat);//마커의 위치설정
                 marker.setMap(naverMap);//마커르 지도에 표시
-                //marker.setIcon(OverlayImage.fromResource(R.drawable.icon);//icon 이미지 변경
                 markers.add(marker);
 
 

@@ -43,8 +43,6 @@ public class OilApi {
     //오피넷에서 발급받은 인증키
     String apiKey="F774200525";
 
-//    ArrayList<Oil> allItems=new ArrayList<Oil>();//모든 주유소
-//    ArrayList<Oil> regionItem=new ArrayList<Oil>();//지역화페 가맹점인 주유소
 
     public OilApi( Context context) {
         mContext =context;

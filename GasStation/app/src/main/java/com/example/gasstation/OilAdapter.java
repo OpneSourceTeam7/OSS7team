@@ -42,8 +42,6 @@ public class OilAdapter extends BaseAdapter {
             holder.oilTel = (TextView) convertView.findViewById(R.id.oil_tel);
 
             holder.oilRegion = (TextView) convertView.findViewById(R.id.oil_region);
-            //holder.oilS = (TextView) convertView.findViewById(R.id.oil_s);
-            //holder.oilB = (TextView) convertView.findViewById(R.id.oil_b);
 
             convertView.setTag(holder);
         } else {
