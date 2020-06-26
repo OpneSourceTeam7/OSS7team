@@ -4,21 +4,33 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.util.Log;
+import android.util.Xml;
 
+import androidx.annotation.XmlRes;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.geometry.Tm128;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class OilApi {
@@ -35,25 +47,104 @@ public class OilApi {
 //    ArrayList<Oil> regionItem=new ArrayList<Oil>();//지역화페 가맹점인 주유소
 
     public OilApi( Context context) {
-        mContext = context;
+        mContext =context;
+    }
+
+    //주유소 좌표값을 상대로 어느 지역인지 확인하는 함수
+    public String regionSearch(Double lo, Double la){
+
+        String apiURL =  "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=" + lo + "," + la + "&sourcecrs=epsg:4326&output=json&orders=roadaddr";
+
+        String xml = new String();
+        try {
+
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", "bv2cn2n8ui");
+            con.setRequestProperty("X-NCP-APIGW-API-KEY", "Fj4hgAOcoiAeF8zhgTnwFJJZFEPUudNKQPOwcMko");
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if(responseCode==200) {
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            xml = response.toString();
+
+            //읽어들인 XML문서를 파싱해주는 객체 생성
+            JSONObject jObject = new JSONObject(xml);
+            JSONArray jja = (JSONArray) jObject.getJSONArray("results");
+
+            JSONObject addr = (JSONObject) jja.getJSONObject(0);
+            JSONObject region = (JSONObject) addr.get("region");
+            JSONObject area = (JSONObject) region.get("area2");
+
+            Log.d("Test123", area.get("name").toString());
+           return area.get("name").toString();
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     //주유소 지역화폐가맹점 확인
-    private void isRegion(Oil gasStation){
+    private void isRegion(Oil gasStation, String reg){
 
-                Resources res= mContext.getResources();
+        Resources res = mContext.getResources();
 
-                XmlResourceParser xpp = res.getXml(R.xml.gapyung);//가평
+        StringBuffer buffer = new StringBuffer();
 
-                StringBuffer buffer = new StringBuffer();
+        int xmlnum;
+        Log.d("Test123", reg);
 
+        if(reg != null) {
+            if (reg.contains("안성시")) xmlnum = R.xml.anseong;
+            else if (reg.contains("동두천시")) xmlnum = R.xml.dongducheon;
+            else if (reg.contains("가평군")) xmlnum = R.xml.gapyung;
+            else if (reg.contains("광주시")) xmlnum = R.xml.gwangju;
+            else if (reg.contains("광명시")) xmlnum = R.xml.gwangmyeong;
+            else if (reg.contains("하남시")) xmlnum = R.xml.hanam;
+            else if (reg.contains("화성시")) xmlnum = R.xml.hwaseong;
+            else if (reg.contains("이천시")) xmlnum = R.xml.icheon;
+            else if (reg.contains("오산시")) xmlnum = R.xml.osan;
+            else if (reg.contains("파주시")) xmlnum = R.xml.paju;
+            else if (reg.contains("포천시")) xmlnum = R.xml.pocheon;
+            else if (reg.contains("수원시")) xmlnum = R.xml.suwon;
+            else if (reg.contains("의정부시")) xmlnum = R.xml.uijeongbu;
+            else if (reg.contains("양주시")) xmlnum = R.xml.yangju;
+            else if (reg.contains("양평군")) xmlnum = R.xml.yangpyeonggun;
+            else if (reg.contains("여주시")) xmlnum = R.xml.yeoju;
+            else if (reg.contains("연천군")) xmlnum = R.xml.yeoncheongun;
+            else if (reg.contains("용인시")) xmlnum = R.xml.yongin;
+            else xmlnum=0;
+
+        }else xmlnum=0;
+
+
+            if(xmlnum != 0) {
 
                 try {
+
+                    XmlResourceParser xpp = res.getXml(xmlnum);
 
                     int eventType = xpp.getEventType();
 
                     String tagName;
-                    Double x=0.0,y=0.0;
+                    Double x = 0.0, y = 0.0;
 
                     while (eventType != XmlPullParser.END_DOCUMENT) {
 
@@ -66,17 +157,17 @@ public class OilApi {
                                 if (tagName.equals("REFINE_ROADNM_ADDR")) {
                                     //buffer.append("주소: ");
                                     xpp.next();
-                                }else if (tagName.equals("REFINE_WGS84_LAT")) {
+                                } else if (tagName.equals("REFINE_WGS84_LAT")) {
                                     //buffer.append("x좌표: ");
                                     xpp.next();
                                     if (xpp.getText() != null)
-                                        x= Double.parseDouble(xpp.getText());
-                                }else if (tagName.equals("REFINE_WGS84_LOGT")) {
+                                        x = Double.parseDouble(xpp.getText());
+                                } else if (tagName.equals("REFINE_WGS84_LOGT")) {
                                     //buffer.append("y좌표: ");
                                     xpp.next();
                                     if (xpp.getText() != null)
-                                        y= Double.parseDouble(xpp.getText());
-                                }else {
+                                        y = Double.parseDouble(xpp.getText());
+                                } else {
                                     xpp.next();
                                 }
                                 break;
@@ -87,8 +178,9 @@ public class OilApi {
                             case XmlPullParser.END_TAG:
                                 tagName = xpp.getName();
                                 if (tagName.equals("row")) {
-                                    if( String.format("%.3f",x).equals(String.format("%.3f",gasStation.getX())) & String.format("%.3f",y).equals(String.format("%.3f",gasStation.getY())) ) {
+                                    if (String.format("%.3f", x).equals(String.format("%.3f", gasStation.getX())) & String.format("%.3f", y).equals(String.format("%.3f", gasStation.getY()))) {
                                         gasStation.setRegion(true);
+                                        return;
                                     }
 
                                 }
@@ -106,6 +198,8 @@ public class OilApi {
                     e.printStackTrace();
                 }
 
+
+            }
     }
 
     //주변 주유소 검색
@@ -118,6 +212,7 @@ public class OilApi {
         //Log.d(TAG, "x값:" + katec_pt.x + "  y값:" + katec_pt.y);
 
         ArrayList<Oil> oils=new ArrayList<>();//주유소 코드를 저장할 배열리스트
+        String reg = regionSearch(y, x);
 
 
         int radius = 5000; //반경(m) //최대 :5000
@@ -215,7 +310,7 @@ public class OilApi {
                                 LatLng x2= tm.toLatLng();
                                 oil.setX(x2.latitude);
                                 oil.setY(x2.longitude);
-                                isRegion(oil);
+                                isRegion(oil, reg);
                                 oils.add(oil);
                                 oil = new Oil();
                             }
@@ -240,7 +335,6 @@ public class OilApi {
                 }
                 Log.d(TAG, oils.get(i).getTitle() + i);
             }
-
 
 
         } catch (MalformedURLException e) {
@@ -336,7 +430,7 @@ public class OilApi {
                                 LatLng x2= tm.toLatLng();
                                 oil.setX(x2.latitude);
                                 oil.setY(x2.longitude);
-                                isRegion(oil);
+                                isRegion(oil, oil.getAdress());
                                 stations.add(oil);
                                 oil = new Oil();
                             }
