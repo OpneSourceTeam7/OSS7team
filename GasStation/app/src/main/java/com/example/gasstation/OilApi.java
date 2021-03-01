@@ -41,7 +41,7 @@ public class OilApi {
 
 
     //오피넷에서 발급받은 인증키
-    String apiKey="F774200525";
+    String apiKey="";
 
 
     public OilApi( Context context) {
