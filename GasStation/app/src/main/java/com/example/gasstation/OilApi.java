@@ -41,7 +41,7 @@ public class OilApi {
 
 
     //오피넷에서 발급받은 인증키
-    String apiKey="";
+    String apiKey="key";
 
 
     public OilApi( Context context) {
@@ -59,8 +59,8 @@ public class OilApi {
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", "bv2cn2n8ui");
-            con.setRequestProperty("X-NCP-APIGW-API-KEY", "Fj4hgAOcoiAeF8zhgTnwFJJZFEPUudNKQPOwcMko");
+            con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", "key-id");
+            con.setRequestProperty("X-NCP-APIGW-API-KEY", "key");
             int responseCode = con.getResponseCode();
             BufferedReader br;
             if(responseCode==200) {
